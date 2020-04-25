@@ -5,8 +5,16 @@ date: "4/24/2020"
 output: html_document
 ---
 
+## non-linear optimization
 
-This Rmarkdown file demonstrates techniques for non-linear optimization. 
+This Rmarkdown file demonstrates techniques for non-linear optimization, and is illustrated with data for the Cobb-Douglas production function, $y = A K^\alpha L^\beta$, K capital, L labor, and the exponents the elasticies of production by input.
+
+### Methods demonstrated:
+ 1. Grid search of space of parameters  
+ 2. non-linear optimization software, find values of the parameters that minimize the sum of squared errors, errors are (data-predicted)  
+ 3. non-linear optimizatin software, maximum likelihood- find values of the parameters that maximize the likelihood of the data assuming errors are normally distributed  
+ 4. log-transform to a linear model  
+ 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -47,6 +55,20 @@ CDloss=function(parms, Q, Cap, Emp){
   
   return (log(Loss))
 }
+
+CDmle=function(parms, Q, Cap, Emp){
+  A = parms[1]
+  alpha = parms[2]
+  beta = parms[3]
+  
+  logLoss = 0
+  for (i in 1:length(Q)){
+    errorTerm= (Q[i]-A*(Cap[i]^beta*Emp[i]^alpha))
+    logLoss = logLoss - dnorm(errorTerm, log=T)
+  }
+  
+  return (logLoss)
+}
 ```
 
 Test the loss function
@@ -65,33 +87,52 @@ beta = 0.8
 parms=c(A, alpha, beta)
 print(CDloss(parms, Q, Cap, Emp))
 ```
-## Echaustive search
+## Grid search
   not the best idea, can get close to an answer 
 
 ```{r}
 
-for (A in seq(from=0.1, to = 3, length.out = 5))
-  for(a in seq(from=0.1, to = 1,length.out = 5))
-   for(b in seq(from=0.1, to = 1, length.out = 5)){
+for (A in seq(from=0.01, to = 2, length.out = 4))
+  for(a in seq(from=0.01, to = 1,length.out = 6))
+   for(b in seq(from=0.01, to = 1, length.out = 6)){
      parms = c(A, a, b)
       print(paste(A, a, b,'        ', CDloss(parms, Q, Cap, Emp)))
   }
 
 ```
 
-
 ## non linear optimization
+
 use function optim to find values of A, alpha, beta
-find values that minimize the loss function, loss = sum of sqrared errors
+find values that minimize the loss function, loss = sum of sqrared errors.  This is a 'least squares' solution
 
 ```{r}
 ##     ?optim
-parms = c(3, 0,3, 0.5)
+parms = c(2, 0.8, 0.2)
 opt = optim(parms, CDloss, Q=Q, Cap=Cap, Emp=Emp)
 print(opt)
-parms = c(1.3, 0.83, 0.22)
+parms = c(opt$par[1], opt$par[2], opt$par[3])
 print(CDloss(parms, Q, Cap,Emp))
 ```
+
+## maximum likelihood estimation
+
+With the right fit, the residual errors should be independent, normally distributed, with mean 0. likelihood of the parameter set (a, $\alpha$, $\beta$) is
+
+$\prod_0^n \phi(e_i)$
+
+$\phi$ is the standard normal distribution
+
+
+```{r}
+parms = c(2, 0.8, 0.2)
+opt = optim(parms, CDmle, Q=Q, Cap=Cap, Emp=Emp)
+print(opt)
+parms = c(opt$par[1], opt$par[2], opt$par[3])
+print(CDloss(parms, Q, Cap,Emp))
+```
+
+
 
 ## transform to logs
 
