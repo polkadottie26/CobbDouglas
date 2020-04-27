@@ -54,7 +54,7 @@ head(CobbDoug)
               #main="3D Scatter Plot")
 ```
 
-### Tried inserting image, but couldn't figure it out:
+### Tried inserting image of the 3D scatter plot, but couldn't figure it out:
 ```{r}
 #![](/Users/Jacky Maya/OneDrive/CSUB classes/Semester/Spring2020/MGMT6550Brownlow/CobbDouglas/images/3DScatterPlot.png)
 
@@ -170,12 +170,24 @@ parms=c(A, alpha, beta)
 print(paste('CD loss: ', CDloss(parms, Q, Cap, Emp)))
 ```
 
+
 ## Questions:
 1. what are the estimated values of A, alpha and beta?
 
 "A =  1.71655367062008  alpha =  0.232343040964735  beta = 0.765310412619359"
 
 2. confidence intervals on A, alpha, beta?
-3. is production at constant return to scale? If production is increasing or decreasing return to scale, which input is most expensive
+
+```{r}
+t.test(CobbDoug, conf.level = 0.9)
+```
+
+
+3. is production at constant return to scale? If production is increasing or decreasing return to scale, which input is most expensive?
+
+Production is increasing. The most expensive input would be if A=2 alpha=1 beta=1 with it resulting in: 29.6701911829027
+
 4. What does the values of A mean??
+
+The values of A mean efficiency.
 
