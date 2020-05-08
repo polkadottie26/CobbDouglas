@@ -1,7 +1,7 @@
 ---
 title: "CobbDouglas"
-author: "Dr. J"
-date: "4/24/2020"
+author: "Dottie"
+date: "5/1/2020"
 output: html_document
 ---
 
