@@ -185,6 +185,19 @@ $$A = exp(0.54), \alpha = 0.23, \beta = 0.77$$
 
 2. confidence intervals on A, alpha, beta?
 
+$\alpha$ : 0.23 $\pm$ 1.96*0.03
+
+$\beta$ : 0.77 $\pm$ 1.96*0.03
+
+log(A) $\pm$ 1.96*0.15
+
+exp(log(A)) = A 
+
+A = 0.54 $\pm$ 1.96*0.15
+=(0.25, 0.82)
+
+= (exp(0.25), exp(0.82)) = (1.28, 2.27)
+
 ```{r}
 t.test(CobbDoug, conf.level = 0.9)
 ```
