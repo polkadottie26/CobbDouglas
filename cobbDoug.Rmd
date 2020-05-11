@@ -211,3 +211,5 @@ Production is increasing. The most expensive input would be if A=2 alpha=1 beta=
 
 The values of A mean efficiency.
 
+A = exp(0.54) = 1.72
+
