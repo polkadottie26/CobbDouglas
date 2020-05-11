@@ -171,6 +171,12 @@ parms=c(A, alpha, beta)
 print(paste('CD loss: ', CDloss(parms, Q, Cap, Emp)))
 ```
 
+$$log(Q) = 0.54 + 0.23*log(K) + 0.77*log(L)$$
+
+Exponentiating:
+$$Q = exp(0.54)*K^{0.23} + L^{0.77}$$
+
+$$A = exp(0.54), \alpha = 0.23, \beta = 0.77$$
 
 ## Questions:
 1. what are the estimated values of A, alpha and beta?
