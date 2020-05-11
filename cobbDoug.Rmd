@@ -150,6 +150,7 @@ parms = c(2, 0.802, 0.208)
 opt = optim(parms, CDmle, Q=Q, Cap=Cap, Emp=Emp)
 print(opt)
 parms = c(opt$par[1], opt$par[2], opt$par[3])
+print(CDmle(parms, Q, Cap,Emp))
 print(CDloss(parms, Q, Cap,Emp))
 ```
 
